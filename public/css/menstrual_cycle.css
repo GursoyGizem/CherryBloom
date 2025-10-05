@@ -1,0 +1,78 @@
+.custom-navbar {
+    background-color: #d464a7;
+    padding: 10px 0;
+}
+h1 {
+    color: #a52a83;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+.inputs label {
+    display: block;
+    margin-top: 10px;
+    font-size: 1em;
+    color: #555;
+}
+.inputs input {
+    margin-top: 5px;
+    padding: 8px;
+    width: 30%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+button {
+    background-color: #a93c86;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+button:hover {
+    background-color: #de88b9;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.calendar-table th, .calendar-table td {
+    border: 1px solid #ddd;
+    width: 14.28%;
+    height: 80px;
+    text-align: center;
+    vertical-align: top;
+}
+.calendar-table th {
+    background-color: #f4f4f4;
+}
+.period {
+    background-color: #ffcccc;
+}
+.fertile {
+    background-color: #cceeff;
+}
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.month-header button {
+    background-color: #c503a1;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.month-header span {
+    font-size: 18px;
+    font-weight: bold;
+}

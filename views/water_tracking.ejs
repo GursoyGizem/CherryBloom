@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <link rel="stylesheet" href="/public/css/water.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Water Tracker</title>
+</head>
+<body>
+    <%- include("../views/partials/nav") %>
+    <h1>Water Tracker</h1>
+    <div 
+        id="user-data" 
+        data-kilo="<%= user_water.kilo || 0 %>" 
+        data-yas="<%= user_water.yas || 0 %>" 
+        data-isim="<%= user_water.isim || 'Anonim' %>">
+    </div>
+    <div class="input-container">
+        <label id="weight-info">Kilo: --</label><br>
+        <label id="age-info">Yaş: --</label><br>
+        <label id="target">Hedef: -- L</label><br>
+    </div>
+    <div class="glasses-container" id="glasses-container"></div>
+    <label>Kaç bardak içtiniz:</label><br>
+    <button id="add-glass-btn">+1 Bardak</button>
+    <button id="reset-glasses-btn">Sıfırla</button>
+    <button id="save-progress-btn">Kaydet</button>
+    <script>
+           let dailyTarget = 0;
+           let glassesDrunk = 0;
+
+    function loadUserData() {
+    const userDataElement = document.getElementById('user-data');
+    const weight = parseInt(userDataElement.dataset.kilo, 10) || 0;
+    const age = parseInt(userDataElement.dataset.yas, 10) || 0;
+    const username = userDataElement.dataset.isim || 'Anonim';
+
+    document.getElementById('weight-info').innerText = `Kilo: ${weight}`;
+    document.getElementById('age-info').innerText = `Yaş: ${age}`;
+    calculateWaterIntake(weight, age);
+    return { username, weight, age };
+    }
+
+    function calculateWaterIntake(weight, age) {
+    if (weight > 0) {
+        dailyTarget = (weight * 35) / 1000;
+        if (age >= 55) dailyTarget *= 0.9;
+
+        const glassesCount = Math.ceil(dailyTarget * 1000 / 200);
+        document.getElementById('target').innerText = `Hedef: ${dailyTarget.toFixed(2)} L`;
+
+        const glassesContainer = document.getElementById('glasses-container');
+        glassesContainer.innerHTML = '';
+
+        for (let i = 0; i < glassesCount; i++) {
+            const glass = document.createElement('div');
+            glass.classList.add('glass');
+            glassesContainer.appendChild(glass);
+        }
+    }
+    }
+
+    function addGlass() {
+    if (!dailyTarget) {
+        alert('Lütfen önce hedef belirleyin.');
+        return;
+    }
+
+    const glasses = document.querySelectorAll('.glass');
+    if (glassesDrunk < glasses.length) {
+        glasses[glassesDrunk].classList.add('filled');
+        glassesDrunk++;
+    } else {
+        alert('Hedefe ulaştınız!');
+    }
+    }
+
+    function resetGlasses() {
+    glassesDrunk = 0;
+    const glasses = document.querySelectorAll('.glass');
+    glasses.forEach(glass => glass.classList.remove('filled'));
+    }
+
+    function saveProgress() {
+    const userDataElement = document.getElementById('user-data');
+    const username = userDataElement.dataset.isim || 'Anonim';
+
+    const user = {
+        username: username,
+        date: new Date().toISOString().split('T')[0],
+        waterIntake: glassesDrunk * 200, 
+        dailyTarget: dailyTarget.toFixed(2)
+    };
+
+    fetch('/save-water-intake', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Veriler kaydedildi!');
+            } else {
+                alert('Veriler kaydedilirken hata oluştu.');
+            }
+        })
+        .catch(error => {
+            console.error('Hata:', error);
+        });
+    }
+
+    window.onload = function () {
+    const user = loadUserData();
+    };
+
+    document.getElementById('add-glass-btn').addEventListener('click', addGlass);
+    document.getElementById('reset-glasses-btn').addEventListener('click', resetGlasses);
+    document.getElementById('save-progress-btn').addEventListener('click', saveProgress);
+    </script>
+</body>
+</html>
+
+
+

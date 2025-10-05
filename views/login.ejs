@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CherryBloom Login Page</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/homepage_enroll_login.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Kullanici giris formu-->
+        <label class="welcome-text">CherryBloom</label>
+        <form action="/login" method="post" onsubmit="return handleLogin(event)">
+            <div class="input-group">
+                <label for="kullanici_ismi">Enter your name:</label>
+                <input type="text" id="kullanici_ismi" name="kullanici_ismi" required>
+            </div>
+            <div class="input-group">
+                <label for="kullanici_soyadi">Enter your surname:</label>
+                <input type="text" id="kullanici_soyadi" name="kullanici_soyadi" required>
+            </div>
+            <div class="input-group">
+                <label for="sifre">Enter your password:</label>
+                <input type="password" id="sifre" name="sifre" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <button type="button" class="btn btn-success" onclick="window.location.href='/'"">Homepage</button>
+    </div>
+    
+    <!-- Kalp ve kiraz animasyonlari-->
+    <template id="item-template-cherry">
+        <div class="item">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="100" cy="70" rx="10" ry="5" class="stem" />
+                <circle cx="90" cy="100" r="15" class="cherry-center" />
+                <circle cx="110" cy="100" r="15" class="cherry-center" />
+            </svg>
+        </div>
+    </template>
+
+    <template id="item-template-heart">
+        <div class="item">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path class="heart" d="M100 110 C 90 90, 70 90, 70 110 C 70 130, 100 150, 100 150 C 100 150, 130 130, 130 110 C 130 90, 110 90, 100 110 Z" />
+            </svg>
+        </div>
+    </template>
+
+    <script>
+        const container = document.querySelector('body');
+        const cherryTemplate = document.getElementById('item-template-cherry');
+        const heartTemplate = document.getElementById('item-template-heart');
+
+        function createCherry() {
+            const cherryItem = cherryTemplate.content.cloneNode(true);
+            const cherryElement = cherryItem.querySelector('.item');
+
+            const startX = Math.random();
+            const endX = Math.random();
+            const duration = Math.random() * 10 + 5;
+
+            cherryElement.style.setProperty('--start-x', startX);
+            cherryElement.style.setProperty('--end-x', endX);
+            cherryElement.style.animationDuration = `${duration}s`;
+
+            container.appendChild(cherryItem);
+
+            setTimeout(() => cherryElement.remove(), duration * 1000);
+        }
+
+        function createHeart() {
+            const heartItem = heartTemplate.content.cloneNode(true);
+            const heartElement = heartItem.querySelector('.item');
+
+            const startX = Math.random();
+            const endX = Math.random();
+            const duration = Math.random() * 10 + 5;
+
+            heartElement.style.setProperty('--start-x', startX);
+            heartElement.style.setProperty('--end-x', endX);
+            heartElement.style.animationDuration = `${duration}s`;
+
+            container.appendChild(heartItem);
+
+            setTimeout(() => heartElement.remove(), duration * 1000);
+        }
+
+        setInterval(createCherry, 300);
+        setInterval(createHeart, 600);
+
+        async function handleLogin(event) {
+        event.preventDefault(); 
+        
+        /* Kullanici girisi olmasi icin users.json ile baglanti kurulur*/
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            window.location.href = '/calorie_count';
+        } else {
+            const errorText = await response.text();
+            alert(errorText);
+        }
+        }
+    </script>
+</body>
+</html>

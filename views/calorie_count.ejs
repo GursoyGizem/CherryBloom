@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <link rel="stylesheet" href="/public/css/calorie_count.css">
+    <link rel="stylesheet" href="style.css">
+    <title>CherryBloom Calorie Count</title>
+</head>
+<body>
+    <%- include("../views/partials/nav") %>
+    <h1>Calorie Count</h1>
+    <!--Oturuma giris yapan kullanicinin verileri session ile dinamik sekilde alinir ve kalori hesabi yapilir -->
+    <div class="container mt-5">
+        <% let bmr, totalCalories, activity = 1; %>
+        
+        <% if (user && user.kilo && user.yas && user.boy) { %>
+            <% bmr = 447.593 + (9.247 * user.kilo) + (3.098 * user.boy) - (4.330 * user.yas); %>
+            <% totalCalories = bmr * activity; %>
+        <% } else { %>
+            <% bmr = 'Hesaplanmadı'; %>
+            <% totalCalories = 'Hesaplanmadı'; %>
+        <% } %>
+
+        <div class="input-container">
+            <label id="weight-info">Kilo: <%= user.kilo || 'Bilgi Yok' %> kg</label><br>
+            <label id="age-info">Yaş: <%= user.yas || 'Bilgi Yok' %></label><br>
+            <label id="height-info">Boy: <%= user.boy || 'Bilgi Yok' %></label><br>
+        </div>
+
+        <div class="mt-3" id="result">
+            <h4>Günlük Kalori İhtiyacınız: <%= totalCalories %> kcal</h4>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

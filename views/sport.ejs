@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <link rel="stylesheet" href="/public/css/sport.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Kadın Vücudu Spor Sayfası</title>
+</head>
+<body>
+    <%- include("../views/partials/nav") %>
+    <h1>Sport</h1>
+    <div class="container" id="card-container"></div>
+    <script>
+        /* sport_data.json dosyasından name, image, video ve calories per set bilgilerinin alınarak dinamik halde card olusumu gerceklestirilmistir*/
+        async function loadCards() {
+            const response = await fetch('../data/sport_data.json');
+            const data = await response.json();
+            const container = document.getElementById('card-container');
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card">
+                        <img src="${item.image}" alt="${item.name}" class="card-img-top">
+                        <div class="card-body">
+                            <h3>${item.name}</h3>
+                            <button class="btn btn-primary mt-2 mb-2" onclick="window.open('${item.video}', '_blank')">Videoyu İzle</button>
+                            <input type="number" class="form-control mb-2" placeholder="Kaç set yaptınız?" id="${item.name.toLowerCase()}-set">
+                            <input type="text" class="form-control" placeholder="Yakılan Kalori" id="${item.name.toLowerCase()}-calories" readonly>
+                            <button class="btn btn-success mb-2" onclick="hesapla('${item.name.toLowerCase()}', ${item.calories_per_set}, '${item.name.toLowerCase()}-calories')">Yakılan Kalori Hesapla</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function hesapla(bolge, kaloriSetBasina, outputId) {
+            const input = document.getElementById(`${bolge}-set`);
+            const setSayisi = parseInt(input.value);
+            const output = document.getElementById(outputId);
+
+            if (!isNaN(setSayisi) && setSayisi > 0) {
+                const yakilanKalori = setSayisi * kaloriSetBasina;
+                output.value = yakilanKalori;
+            } else {
+                output.value = "Geçersiz set sayısı";
+            }
+        }
+
+        loadCards();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

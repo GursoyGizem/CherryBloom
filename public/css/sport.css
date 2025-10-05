@@ -1,0 +1,60 @@
+.custom-navbar {
+    background-color: #ae6c3a;
+    padding: 10px 0;
+}
+h1 {
+    color: #fcaf7d;
+}
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; 
+    padding: 20px;
+    justify-items: center;
+}
+.card {
+    width: 300px;
+    background-color: #ffae42;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+}
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.card-body {
+    padding: 20px;
+}
+.card h3 {
+    margin: 0 0 10px;
+    color: #fff;
+}
+.card input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+}
+.card button {
+    background-color: #d96e00;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.card button:hover {
+    background-color: #b55a00;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #d96e00;
+    color: white;
+    margin-top: 20px;
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <link rel="stylesheet" href="/public/css/menstrual_cycle.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Menstrual Cycle Calendar</title>
+</head>
+<body>
+    <%- include("../views/partials/nav") %>
+    <div class="container">
+        <h1>Menstrual Cycle Tracking</h1>
+        
+        <div class="inputs mb-4">
+            <label for="cycleLength">Adet Süresi (gün):</label>
+            <input type="number" id="cycleLength" placeholder="Kaç gün sürdü" min="1">
+            <label for="cycleInterval">Adet Döngüsü (gün):</label>
+            <input type="number" id="cycleInterval" placeholder="Kaç günde bir tekrar" min="1">
+            <label for="startDate">Adet Başlangıç Tarihi:</label>
+            <input type="date" id="startDate">
+            <button onclick="generateCalendar()">Takvimi Oluştur</button>
+        </div>
+        <div id="calendarContainer"></div>
+    </div>
+
+    <script>
+        let startDate = new Date();
+        let cycleLength = 0;
+        let cycleInterval = 0;
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        function generateCalendar() {
+            cycleLength = parseInt(document.getElementById("cycleLength").value);
+            cycleInterval = parseInt(document.getElementById("cycleInterval").value);
+            const startDateInput = document.getElementById("startDate").value;
+
+            if (!cycleLength || !cycleInterval || !startDateInput) {
+                alert("Lütfen tüm bilgileri doğru girin.");
+                return;
+            }
+
+            startDate = new Date(startDateInput);
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        function renderCalendar(month, year) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+
+            const firstDayOfWeek = firstDay.getDay();
+            let calendarHTML = `
+                <div class="month-header">
+                    <button onclick="previousMonth()">Önceki Ay</button>
+                    <span>${firstDay.toLocaleString('tr-TR', { month: 'long', year: 'numeric' })}</span>
+                    <button onclick="nextMonth()">Sonraki Ay</button>
+                </div>
+                <table class="calendar-table">
+                    <thead>
+                        <tr>
+                            <th>Pzt</th>
+                            <th>Sal</th>
+                            <th>Çar</th>
+                            <th>Per</th>
+                            <th>Cum</th>
+                            <th>Cmt</th>
+                            <th>Paz</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            let day = 1;
+            let started = false;
+            for (let i = 0; i < 6; i++) {
+                calendarHTML += '<tr>';
+                for (let j = 1; j <= 7; j++) { 
+                    if (!started && j === (firstDayOfWeek === 0 ? 7 : firstDayOfWeek)) {
+                        started = true;
+                    }
+                    if (started && day <= daysInMonth) {
+                        const currentDay = new Date(year, month, day);
+                        const dayClass = getDayClass(currentDay);
+                        calendarHTML += `<td class="${dayClass}">${day}</td>`;
+                        day++;
+                    } else {
+                        calendarHTML += '<td></td>';
+                    }
+                }
+                calendarHTML += '</tr>';
+            }
+
+            calendarHTML += '</tbody></table>';
+            document.getElementById("calendarContainer").innerHTML = calendarHTML;
+        }
+
+        function getDayClass(date) {
+            const diffTime = date - startDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays >= 0) {
+                const daysSinceCycleStart = diffDays % cycleInterval;
+
+            if (daysSinceCycleStart < cycleLength) {
+                return 'period';
+            }
+        }
+           return '';
+        }
+
+        function previousMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+    </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,26 @@
+# Node.js bağımlılıkları
+node_modules/
+
+# Çevresel değişken dosyaları
+.env
+
+# VS Code ayarları
+.vscode/
+
+# Log dosyaları
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
+
+# Derlenmiş dosyalar
+dist/
+build/
+
+# Temporary veya cache klasörleri
+tmp/
+.cache/

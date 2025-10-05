@@ -1,0 +1,95 @@
+body {
+    background-color: #f7d7eb;
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #800000;
+}
+.welcome-text {
+    font-size: 36px;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+    width: 300px;
+}
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #800000;
+}
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+button {
+    width: 50%;
+    padding: 10px;
+    background-color: #91c691;
+    color: #800000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 0;
+}
+button:hover {
+    background-color: #76e276;
+}
+.item {
+    position: absolute;
+    animation: move linear infinite;
+}
+svg {
+    height: 50px;
+    width: 50px;
+}
+.stem {
+    stroke: #98FF98;
+    stroke-width: 4;
+    transform-origin: center;
+}
+.leaf {
+    fill: #98FF98;
+}
+.cherry {
+    fill: #800000; 
+}
+.cherry-center {
+    fill: #800000;
+}
+.heart {
+    fill: #800000;
+}
+@keyframes move {
+    0% {
+        transform: translate(calc(-100vw * var(--start-x)), 110vh) scale(0.8);
+    }
+    100% {
+        transform: translate(calc(100vw * var(--end-x)), -10vh) scale(1.2);
+    }
+}

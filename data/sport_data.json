@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Sırt",
+        "image": "../public/images/sirt.jpg",
+        "calories_per_set": 40,
+        "video":"https://www.youtube.com/watch?v=KKFF58Nrd28&ab_channel=TugceAlpay"
+    },
+    {
+        "name": "Kol",
+        "image": "../public/images/kol.jpg",
+        "calories_per_set": 30,
+        "video":"https://www.youtube.com/watch?v=eNMHEQt4-rI&ab_channel=EbruKaraduman"
+    },
+    {
+        "name": "Göğüs",
+        "image": "../public/images/gogus.jpg",
+        "calories_per_set": 40,
+        "video":"https://www.youtube.com/watch?v=hBBd7PRQYb4&ab_channel=Squatgirl"
+    },
+    {
+        "name": "Karın",
+        "image": "../public/images/karin.jpg",
+        "calories_per_set": 30,
+        "video":"https://www.youtube.com/watch?v=GULackmdA8E&ab_channel=TugceAlpay"
+    },
+    {
+        "name": "Kalça",
+        "image": "../public/images/kalca.jpg",
+        "calories_per_set": 40,
+        "video":"https://www.youtube.com/watch?v=t8PaUloEW1c&ab_channel=TugceAlpay"
+    },
+    {
+        "name": "Bacak",
+        "image": "../public/images/bacak.jpg",
+        "calories_per_set": 55,
+        "video":"https://www.youtube.com/watch?v=82zRiKQipvc&ab_channel=EylemAbaci"
+    }
+]

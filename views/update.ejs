@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <link rel="stylesheet" href="/public/css/update.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Update Information</title>
+</head>
+<body>
+  <%- include("../views/partials/nav") %>
+  <h1>Update Information</h1>
+  <div class="container">
+    <form action="/update" method="POST">
+        <label for="isim">İsim:</label>
+        <input type="text" id="isim" name="isim" value="<%= user.isim %>" required>
+        
+        <label for="soyisim">Soyisim:</label>
+        <input type="text" id="soyisim" name="soyisim" value="<%= user.soyisim %>" required>
+        
+        <label for="yas">Yaş:</label>
+        <input type="number" id="yas" name="yas" value="<%= user.yas %>" required>
+        
+        <label for="boy">Boy:</label>
+        <input type="number" id="boy" name="boy" value="<%= user.boy %>" required>
+        
+        <label for="kilo">Kilo:</label>
+        <input type="number" id="kilo" name="kilo" value="<%= user.kilo %>" required>
+        
+        <button type="submit">Update</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
